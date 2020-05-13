@@ -1,0 +1,39 @@
+@import "./colours";
+
+
+.action-button:hover{
+  border: 2px solid #000000;
+}
+
+.action-button{
+  transition: background-color 0.3s, border 0.1s;
+
+  position: relative;
+  height: 50px;
+  width: 200px;
+  outline: none;
+  margin-bottom: 20px;
+
+  border-radius: 15px;
+  color: rgba(0, 0, 0, 0.75);
+
+  font-size: 20px;
+  font-weight: bold;
+  font-family: Montserrat;
+
+  border: 2px solid rgba(255, 221, 31, 0);
+
+  background-color: #fce890;
+
+  &.active{
+    background-color: #ffdd1f;
+  }
+
+  &.passive{
+    background-color: #d9d3b6;
+  }
+
+  &.stretch{
+    width: 100%;
+  }
+}
