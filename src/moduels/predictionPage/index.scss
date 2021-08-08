@@ -7,7 +7,39 @@
   align-items: center;
 
   min-height: 100vh;
-  height: 100%;
+
+  .hide{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2000;
+  }
+
+  .chosen-image{
+    transition: all 0.5s;
+
+    position: absolute;
+    top: 20%;
+    left: 20%;
+    width: 60%;
+    height: 60%;
+    overflow: hidden;
+
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+
+    z-index: 1000;
+
+    &.hidden{
+      top: 50%;
+      left: 50%;
+
+      width: 0;
+      height: 0;
+    }
+  }
 
   @keyframes faqTextAppear {
     from{
@@ -21,6 +53,14 @@
     }
   }
 
+  .logo{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+
+    z-index: 1000;
+  }
+
   .faq{
     transition: all 0.5s 0.5s;
 
@@ -28,7 +68,6 @@
     position: absolute;
     top: 20px;
     right: 20px;
-    height: 80px;
     width: 80px;
     background-color: white;
     border-radius: 40px;
@@ -40,14 +79,15 @@
     padding: 30px;
     box-sizing: border-box;
     overflow: hidden;
+    height: 80px;
+    max-width: 600px;
 
     &.extended{
       transition: all 0.5s;
 
       width: 80%;
-      height: 50%;
-      right: 10%;
-      top: 25%;
+      height: 60%;
+      overflow-y: auto;
     }
 
     .overlay{
@@ -57,6 +97,7 @@
       top: 0;
       left: 0;
       width: 100%;
+      max-width: 600px;
       height: 100%;
 
       display: flex;
@@ -83,8 +124,6 @@
     }
 
     .title{
-      //animation: faqTextAppear 0.9s;
-
       color: #ffdd1f;
       font-weight: bold;
       margin-bottom: 10px;
@@ -93,8 +132,7 @@
       text-align: start;
     }
     .body{
-      //animation: faqTextAppear 0.9s;
-
+      width: 100%;
       margin-bottom: 20px;
     }
   }
@@ -125,17 +163,6 @@
 
       flex-wrap: wrap;
     }
-  }
-
-  .description{
-    border-radius: 15px;
-
-    width: 50%;
-    padding: 10px;
-    text-align: center;
-
-    margin-bottom: 20px;
-    margin-top: 20px;
   }
 
   .images{

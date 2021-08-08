@@ -1,0 +1,135 @@
+.register-page{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  .identity-document-window{
+    transition: all 0.5s;
+
+    position: relative;
+    width: 90%;
+    max-width: 400px;
+    max-height: 200px;
+    overflow: hidden;
+
+    background: white;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-bottom: 80px;
+
+    z-index: 10001;
+
+    &.hidden{
+      max-height: 0px;
+
+      .hideble{
+        opacity: 0;
+      }
+    }
+
+    .hideble{
+      transition: opacity 0.5s;
+
+      opacity: 1;
+    }
+
+    .description{
+      width: 90%;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+      border-radius: 20px;
+
+      margin-top: 10px;
+      margin-bottom: 5px;
+    }
+
+    .close{
+      position: absolute;
+      top: 0px;
+      right: 0px;
+
+      width: 30px;
+      height: 30px;
+      border-radius: 20px;
+      padding: 0;
+
+      font-size: 20px;
+      line-height: 30px;
+      text-align: center;
+      font-weight: bold;
+      color: white;
+
+      z-index: 20;
+
+      background: rgb(175, 175, 175);
+    }
+
+    .action-button{
+      width: 100%;
+      position: absolute;
+      bottom: 0px;
+    }
+  }
+
+  .logo{
+    transition: all 1s;
+
+    position: absolute;
+    top: 10%;
+    width: 80%;
+
+    &.small{
+      top: 5%;
+      width: 20%;
+      min-width: 400px;
+    }
+  }
+
+  input{
+    width: 90%;
+    max-width: 400px;
+    height: 40px;
+    margin-bottom: 20px;
+
+    padding-left: 10px;
+    padding-right: 10px;
+    box-sizing: border-box;
+
+    font-size: 30px;
+    line-height: 40px;
+
+    border-radius: 20px;
+    border: solid 2px rgba(0, 0, 0, 0.75);
+  }
+
+  .password-check{
+    transition: all 0.5s, border 0.2s;
+    overflow: hidden;
+    height: 40px;
+    padding: 5px;
+
+    &.hidden{
+      height: 0px;
+      margin: 0;
+      padding: 0;
+      border: solid 0px rgba(0, 0, 0, 0.75);
+      color: rgba(0, 0, 0, 0);
+    }
+  }
+
+  .action-button{
+    width: 90%;
+    max-width: 400px;
+
+    &.hidden{
+      height: 0px;
+      margin: 0;
+      border: 0px solid #ffdd1f;
+      color: rgba(0, 0, 0, 0);
+    }
+  }
+}

@@ -1,0 +1,155 @@
+import React, {useState, useEffect} from "react";
+import "./index.scss"
+import textLogo from "../../img/polenAnalystTextLogo.svg"
+
+function LoginPage(props){
+
+  const [login, setLogin] = useState("")
+  const [password, setPassword] = useState("")
+  const [secondPassword, setSecondPassword] = useState("")
+  const [name, setName] = useState("")
+  const [organisation, setOrganization] = useState("")
+  const [isRegister, setIsRegister] = useState(false)
+  const [isDocumentWindow, setIsDocumentWindow] = useState(false)
+  const [validated, setValidated] = useState(false)
+
+  useEffect(() => {
+    if(
+      (
+        isRegister &&
+        secondPassword === password &&
+        password.length >=5 &&
+        organisation !== "" &&
+        name !== "" &&
+        (login.length >= 5)
+      )
+      ||
+      (
+        !isRegister &&
+        (password.length >= 8) &&
+        (login.length >= 5)
+      )
+    ){
+      setValidated(true)
+    }else{
+      setValidated(false)
+    }
+  })
+
+  function handleChange(selectorFiles){
+    console.log(selectorFiles)
+  }
+
+  function singIn() {
+    let body = {
+      login: login,
+      password: password,
+      name: name,
+      organisation: organisation
+    }
+
+    props.setPage("predict")
+
+    // let request = new XMLHttpRequest();
+    // request.open("POST", "", true);
+    // request.send(JSON.stringify(body));
+    //
+    // request.onload = () => {
+    //   let data = JSON.parse(request.response);
+    //
+    //   console.log(data)
+    // }
+  }
+
+  return(
+    <div className={"register-page"}>
+
+      <img className={"logo" + (isRegister ? " small": "")} src={textLogo}/>
+      <div className={"H1"}>
+        {isRegister ? "РЕГИСТРАЦИЯ": "ВХОД"}
+      </div>
+      <div style={{marginTop: "20px"}}/>
+      <input
+        type={"text"}
+        placeholder={"ФИО"}
+        autoComplete={"name"}
+        className={"password-check" + (isRegister ? "": " hidden")}
+        onChange={(ev) => setName(ev.target.value)}
+      />
+      <input
+        type={"text"}
+        placeholder={"место работы"}
+        autoComplete={"organization"}
+        className={"password-check" + (isRegister ? "": " hidden")}
+        onChange={(ev) => setOrganization(ev.target.value)}
+      />
+      <input
+        type={"email"}
+        placeholder={"email"}
+        autoComplete={"username"}
+        onChange={(ev) => setLogin(ev.target.value)}
+      />
+      <input
+        type={"password"}
+        placeholder={"пароль"}
+        autoComplete={isRegister ? "new-password": "current-password"}
+        onChange={(ev) => setPassword(ev.target.value)}
+      />
+      <input
+        type={isRegister ? "password": "text"}
+        placeholder={"повтор пароля"}
+        autoComplete={isRegister ? "new-password": "current-password"}
+        className={"password-check" + (isRegister ? "": " hidden")}
+        onChange={(ev) => setSecondPassword(ev.target.value)}
+      />
+
+      <div className={"identity-document-window" + (isDocumentWindow ? "": " hidden")}>
+        <button className={"close hideble"} onClick={() => setIsDocumentWindow(false)}>
+          X
+        </button>
+        <div className={"description hideble"}>
+          Для регистрации нужно предоставить документ подтверждающий личность
+        </div>
+        <input
+          className={"hideble"}
+          type="file"
+          id="selectedFile"
+          style={{display: "none"}}
+          onChange={ (e) => singIn()}
+        />
+        <button
+          className={"action-button" + (validated ? " active": "")}
+          onClick={() => {
+            if(isRegister){
+              if(isDocumentWindow){
+                document.getElementById('selectedFile').click()
+              }else{
+                setIsDocumentWindow(true)
+              }
+            }else{
+              singIn()
+            }
+          }}
+        >
+          {isDocumentWindow ?
+            "выбрать документ" :
+            (!isRegister ? "войти" : "зарегистрироваться")}
+        </button>
+      </div>
+
+      <button
+        className={"secondary-button active"}
+        onClick={() => {
+          setIsRegister(!isRegister)
+          if(isRegister){
+            setIsDocumentWindow(false)
+          }
+        }}
+      >
+        {!isRegister ? "зарегистрироваться" : "войти"}
+      </button>
+    </div>
+  )
+}
+
+export default LoginPage;
