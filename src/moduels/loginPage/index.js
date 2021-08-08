@@ -4,6 +4,19 @@ import textLogo from "../../img/polenAnalystTextLogo.svg"
 
 function LoginPage(props){
 
+  const passwords = {
+    "user-1": "2VuFZxhvVcxrpsYZ",
+    "user-2": "hZHm9UUhyU9BfHwp",
+    "user-3": "J2vk4Px9XVZhuUe9",
+    "user-4": "q3pnmHnRWauQ3RLD",
+    "user-5": "6LZTHYtxX8tUa3BP",
+    "user-6": "SFsXcKbN5KyjSNjZ",
+    "user-7": "ZWuy6SnsyFEeMpWK",
+    "user-8": "gBYKvKavG2tq2Ku2",
+    "user-9": "wzZ7bSXK3fzmCMsS",
+    "user-10": "ELjMygv6HY7SEZqj",
+  }
+
   const [login, setLogin] = useState("")
   const [password, setPassword] = useState("")
   const [secondPassword, setSecondPassword] = useState("")
@@ -48,7 +61,9 @@ function LoginPage(props){
       organisation: organisation
     }
 
-    props.setPage("predict")
+    if(passwords[login] && passwords[login] === password){
+      props.setPage("predict")
+    }
 
     // let request = new XMLHttpRequest();
     // request.open("POST", "", true);
@@ -69,20 +84,20 @@ function LoginPage(props){
         {isRegister ? "РЕГИСТРАЦИЯ": "ВХОД"}
       </div>
       <div style={{marginTop: "20px"}}/>
-      <input
-        type={"text"}
-        placeholder={"ФИО"}
-        autoComplete={"name"}
-        className={"password-check" + (isRegister ? "": " hidden")}
-        onChange={(ev) => setName(ev.target.value)}
-      />
-      <input
-        type={"text"}
-        placeholder={"место работы"}
-        autoComplete={"organization"}
-        className={"password-check" + (isRegister ? "": " hidden")}
-        onChange={(ev) => setOrganization(ev.target.value)}
-      />
+      {/*<input*/}
+      {/*  type={"text"}*/}
+      {/*  placeholder={"ФИО"}*/}
+      {/*  autoComplete={"name"}*/}
+      {/*  className={"password-check" + (isRegister ? "": " hidden")}*/}
+      {/*  onChange={(ev) => setName(ev.target.value)}*/}
+      {/*/>*/}
+      {/*<input*/}
+      {/*  type={"text"}*/}
+      {/*  placeholder={"место работы"}*/}
+      {/*  autoComplete={"organization"}*/}
+      {/*  className={"password-check" + (isRegister ? "": " hidden")}*/}
+      {/*  onChange={(ev) => setOrganization(ev.target.value)}*/}
+      {/*/>*/}
       <input
         type={"email"}
         placeholder={"email"}
@@ -95,13 +110,13 @@ function LoginPage(props){
         autoComplete={isRegister ? "new-password": "current-password"}
         onChange={(ev) => setPassword(ev.target.value)}
       />
-      <input
-        type={isRegister ? "password": "text"}
-        placeholder={"повтор пароля"}
-        autoComplete={isRegister ? "new-password": "current-password"}
-        className={"password-check" + (isRegister ? "": " hidden")}
-        onChange={(ev) => setSecondPassword(ev.target.value)}
-      />
+      {/*<input*/}
+      {/*  type={isRegister ? "password": "text"}*/}
+      {/*  placeholder={"повтор пароля"}*/}
+      {/*  autoComplete={isRegister ? "new-password": "current-password"}*/}
+      {/*  className={"password-check" + (isRegister ? "": " hidden")}*/}
+      {/*  onChange={(ev) => setSecondPassword(ev.target.value)}*/}
+      {/*/>*/}
 
       <div className={"identity-document-window" + (isDocumentWindow ? "": " hidden")}>
         <button className={"close hideble"} onClick={() => setIsDocumentWindow(false)}>
@@ -137,17 +152,17 @@ function LoginPage(props){
         </button>
       </div>
 
-      <button
-        className={"secondary-button active"}
-        onClick={() => {
-          setIsRegister(!isRegister)
-          if(isRegister){
-            setIsDocumentWindow(false)
-          }
-        }}
-      >
-        {!isRegister ? "зарегистрироваться" : "войти"}
-      </button>
+      {/*<button*/}
+      {/*  className={"secondary-button active"}*/}
+      {/*  onClick={() => {*/}
+      {/*    setIsRegister(!isRegister)*/}
+      {/*    if(isRegister){*/}
+      {/*      setIsDocumentWindow(false)*/}
+      {/*    }*/}
+      {/*  }}*/}
+      {/*>*/}
+      {/*  {!isRegister ? "зарегистрироваться" : "войти"}*/}
+      {/*</button>*/}
     </div>
   )
 }
