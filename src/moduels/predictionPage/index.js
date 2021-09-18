@@ -94,44 +94,20 @@ function PredictPage(props){
         <div className={"overlay" + (faqExtended ? " extended": "")}>
           ?
         </div>
-        <div className={"title"}>
-          Lorem ipsum
-        </div>
         <div className={"body"}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Proin ornare neque ac gravida varius.
-          Proin semper metus quis risus bibendum,
-          non feugiat mauris dignissim. Curabitur volutpat,
-          ante eu semper finibus, nisl sapien tempor dui,
-          id tempor mauris arcu in ante. Mauris vulputate quis arcu
-          sit amet dictum. Donec auctor iaculis congue.
-          Praesent a tristique velit. In hac habitasse platea dictumst.
+          Привет! Это сервис автоматического распознавания пыльцевых зерен на изображениях Pollen Analyst. Пожалуйста, ознакомьтесь с краткой инструкцией перед началом пользования сервисом.
         </div>
         <div className={"title"}>
-          Lorem ipsum
+          Выбор изображений
         </div>
         <div className={"body"}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Proin ornare neque ac gravida varius.
-          Proin semper metus quis risus bibendum,
-          non feugiat mauris dignissim. Curabitur volutpat,
-          ante eu semper finibus, nisl sapien tempor dui,
-          id tempor mauris arcu in ante. Mauris vulputate quis arcu
-          sit amet dictum. Donec auctor iaculis congue.
-          Praesent a tristique velit. In hac habitasse platea dictumst.
+          В сервисе есть возможность загрузить до 100 изображений общим объемом не более 200 Мб по кнопке «Выбрать фото». Доступные форматы изображений: “png”, “jpg”, “jpeg”. На данный момент сервис умеет обрабатывать изображения пыльцы с оптического микроскопа, окрашенной фуксином.
         </div>
         <div className={"title"}>
-          Lorem ipsum
+          Распознавание
         </div>
         <div className={"body"}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Proin ornare neque ac gravida varius.
-          Proin semper metus quis risus bibendum,
-          non feugiat mauris dignissim. Curabitur volutpat,
-          ante eu semper finibus, nisl sapien tempor dui,
-          id tempor mauris arcu in ante. Mauris vulputate quis arcu
-          sit amet dictum. Donec auctor iaculis congue.
-          Praesent a tristique velit. In hac habitasse platea dictumst.
+          Нажмите на кнопку «Сгенерировать отчет». После этого выбранные фотографии загрузятся на сервер, где будет произведено их распознавание с помощью нейронных сетей. Далее будет сформирован отчет по обнаруженной пыльце. Отчет будет доступен вместе с результатами распознавания спустя несколько секунд после загрузки изображений. Он автоматически откроется в соседней вкладке браузера, а результаты распознавания будут отображены на изображениях.
         </div>
       </div>
 
