@@ -34,7 +34,7 @@ function PredictPage(props){
 
   function predict() {
 
-    const API_ENDPOINT = "http://pollen-server.ngrok.io/predict";
+    const API_ENDPOINT = "https://pollen-server.ngrok.io/predict";
     const downloadUrl = "https://pollen-server.ngrok.io/download?path="
     const request = new XMLHttpRequest();
     const formData = new FormData();
