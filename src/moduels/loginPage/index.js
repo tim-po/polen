@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import "./index.scss"
 import textLogo from "../../img/polenAnalystTextLogo.svg"
+import {withLocalStorage} from "../../localStorage";
 
 function LoginPage(props){
 
@@ -49,6 +50,15 @@ function LoginPage(props){
     }
   })
 
+  useEffect(() => {
+    const savedPassword = withLocalStorage({password: ""}, 'load').password
+    const savedLogin = withLocalStorage({login: ""}, 'load').login
+    console.log(savedPassword, savedLogin)
+    if(passwords[savedLogin] && passwords[savedLogin] === savedPassword){
+      props.setPage("predict")
+    }
+  }, [])
+
   function handleChange(selectorFiles){
     console.log(selectorFiles)
   }
@@ -63,17 +73,9 @@ function LoginPage(props){
 
     if(passwords[login] && passwords[login] === password){
       props.setPage("predict")
+      withLocalStorage({password: password}, 'save')
+      withLocalStorage({login: login}, 'save')
     }
-
-    // let request = new XMLHttpRequest();
-    // request.open("POST", "", true);
-    // request.send(JSON.stringify(body));
-    //
-    // request.onload = () => {
-    //   let data = JSON.parse(request.response);
-    //
-    //   console.log(data)
-    // }
   }
 
   return(

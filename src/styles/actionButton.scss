@@ -6,20 +6,28 @@
 }
 
 .action-button{
-  transition: background-color 0.3s, border 0.1s;
+  transition: all 0.2s, background-color 0.3s, border 0.1s;
 
   position: relative;
-  height: 50px;
-  width: 250px;
+  //height: 50px;
+  //width: 250px;
+  height: 40.5px;
+  width: max-content;
   outline: none;
+  padding: 8px 10px;
   margin-bottom: 10px;
 
   border-radius: 15px;
   color: rgba(0, 0, 0, 0.75);
+  cursor: pointer;
 
   font-size: 20px;
   font-weight: bold;
   font-family: Montserrat;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   border: 0px solid rgba(0, 0, 0, 0.4);
 
@@ -35,5 +43,16 @@
 
   &.stretch{
     width: 100%;
+  }
+
+  &.secondary{
+    background: white;
+    border: 2px solid #b6a216;
+    color: #b6a216;
+
+    &:hover{
+      background: #ffdd1f;
+      color: white;
+    }
   }
 }

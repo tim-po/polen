@@ -1,5 +1,36 @@
 @import "../../index";
 
+.arrow-button{
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  top: calc(100% - 18px);
+  background: white;
+  border-radius: 18px;
+  padding: 0;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0);
+
+  &.left{
+    left: 0;
+  }
+  &.right{
+    right: 0;
+  }
+}
+
+@keyframes chosenImageTransition {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
 .predict-page{
   display: flex;
   flex-direction: column;
@@ -20,6 +51,7 @@
   .chosen-image{
     transition: all 0.5s;
 
+    animation: chosenImageTransition 0.3s;
     position: absolute;
     top: 20%;
     left: 20%;
@@ -154,15 +186,6 @@
     background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(15px);
 
-    .buttons{
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      width: 80%;
-      max-width: 600px;
-
-      flex-wrap: wrap;
-    }
   }
 
   .images{
@@ -195,4 +218,16 @@
       }
     }
   }
+}
+
+.buttons{
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  max-width: 600px;
+
+  flex-wrap: wrap;
 }
