@@ -39,6 +39,10 @@
 
   &.passive{
     background-color: #d9d3b6;
+    height: 0px !important;
+    padding: 0;
+    overflow: hidden;
+    margin-bottom: 0;
   }
 
   &.stretch{

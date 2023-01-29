@@ -56,7 +56,7 @@
     top: 20%;
     left: 20%;
     width: 60%;
-    height: 60%;
+    //height: 60%;
     overflow: hidden;
 
     border-radius: 40px;
@@ -98,7 +98,7 @@
 
     z-index: 20;
     position: absolute;
-    top: 20px;
+    top: 70px;
     right: 20px;
     width: 80px;
     background-color: white;
@@ -222,12 +222,16 @@
 
 .buttons{
   display: flex;
-  flex-direction: row;
-  gap: 8px;
-  align-items: center;
+  flex-direction: column;
+  //gap: 8px;
+  align-items: flex-end;
   justify-content: center;
-  width: 80%;
+  //width: 80%;
   max-width: 600px;
+
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
 
   flex-wrap: wrap;
 }

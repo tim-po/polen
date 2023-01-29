@@ -3,6 +3,7 @@ import "./index.scss"
 import logo from "../../img/polenAnalystLogo.svg";
 import Spinner from "../../Spinner";
 import getUserLocale from 'get-user-locale';
+import {withLocalStorage} from "../../localStorage";
 
 function PredictPage(props) {
 
@@ -10,6 +11,7 @@ function PredictPage(props) {
   const [faqExtended, setFaqExtended] = useState(false)
   const [chosenImage, setChosenImage] = useState(null)
   const [chosenImages, setChosenImages] = useState(null)
+  const [chosenImagefiles, setChosenImageFiles] = useState(null)
   const [downloadedReport, setDownloadedReport] = useState(null)
   const [correctionCsv, setCorrectionCsv] = useState(null)
   const [chosenImageHidden, setChosenImageHidden] = useState(true)
@@ -18,6 +20,7 @@ function PredictPage(props) {
   const [reportPDF, setReportPDF] = useState('');
   const [reportCSV, setReportCSV] = useState('');
   const [didDownloadCsv, setDidDownloadCsv] = useState(false);
+  const [isReportCorrect, setIsReportCorrect] = useState(undefined);
 
 
   function handleChange(selectorFiles) {
@@ -25,6 +28,7 @@ function PredictPage(props) {
     let newImageTiles = []
     let filterSelectedFiles = Object.values(selectorFiles).filter(file => file.name.includes("jpg") || file.name.includes("png") || file.name.includes("jpeg") || file.name.includes("http"))
     setChosenImages(filterSelectedFiles.map(file => URL.createObjectURL(file)))
+    setChosenImageFiles(filterSelectedFiles)
     for (let i = 0; i < filterSelectedFiles.length; i++) {
       newImageTiles.push(
         <div
@@ -48,6 +52,7 @@ function PredictPage(props) {
 
   function predict() {
     setDidDownloadCsv(false)
+    setIsReportCorrect(undefined)
     if (!chosenImages || !chosenImages.length) {
       return
     }
@@ -64,14 +69,17 @@ function PredictPage(props) {
       if (request.readyState === 4 && request.status === 200) {
         let responseJson = JSON.parse(request.responseText)
         let newImageTiles = []
-        setChosenImages(responseJson.images_with_bboxes.map(url => downloadUrl+url))
+        setChosenImages(responseJson.images_with_bboxes.map(url => {
+          console.log(downloadUrl+url)
+          return (downloadUrl+url)
+        }))
         responseJson.images_with_bboxes.forEach((imageUrl, index) => {
           newImageTiles.push(
             <div
               className={"image-tile"}
               key={imageUrl}
               onClick={() => {
-                setChosenImage(downloadUrl + imageUrl)
+                setChosenImage(index)
                 setChosenImageHidden(false)
               }}
             >
@@ -86,8 +94,8 @@ function PredictPage(props) {
       }
     };
 
-    for (let i = 0; i < chosenImages.length; i++) {
-      formData.append(`file${i}.png`, chosenImages[i]);
+    for (let i = 0; i < chosenImagefiles.length; i++) {
+      formData.append(`file${i}.png`, chosenImagefiles[i]);
     }
     request.send(formData);
   }
@@ -106,9 +114,15 @@ function PredictPage(props) {
     const request = new XMLHttpRequest();
 
     request.open("POST", API_ENDPOINT, true);
-    request.onreadystatechange = () => {}
+    request.onreadystatechange = () => {
+      setIsReportCorrect(true)
+    }
 
     request.send();
+  }
+
+  const disaproveCsv = () => {
+    setIsReportCorrect(false)
   }
 
   const correctCsv = (correctionCsv) => {
@@ -124,6 +138,7 @@ function PredictPage(props) {
       setIsLoading(false)
       if (request.readyState === 4 && request.status === 200) {
         console.log('corrected')
+        setIsReportCorrect(true)
       }
     };
     console.log(correctionCsv[0])
@@ -170,7 +185,7 @@ function PredictPage(props) {
         />
       }
       <img
-        key={chosenImage}
+        key={chosenImage !== null ? chosenImages[chosenImage] : ""}
         src={chosenImage !== null ? chosenImages[chosenImage] : ""}
         className={"chosen-image" + (chosenImageHidden ? " hidden" : "")}
       />
@@ -207,6 +222,20 @@ function PredictPage(props) {
         </div>
       </div>
 
+      <button
+        className={"action-button"}
+        onClick={() => {
+          withLocalStorage({password: ''}, 'save')
+          withLocalStorage({login: ''}, 'save')
+          window.location.reload()
+        }}
+        style={{background: 'white', color: 'red', position: 'fixed', top: '20px', 'right': '20px', zIndex: '19', boxShadow: '0 0 5px rgba(0, 0, 0, 0.25)'}}
+      >
+        <div className={"inner-text"} style={{fontSize: '18px'}}>
+          Logout
+        </div>
+      </button>
+
       <div className={"controls"}>
         <div className={"description"}>
           Можно добавлять от 1 до 500 фото,
@@ -220,77 +249,86 @@ function PredictPage(props) {
           style={{display: "none"}}
           onChange={(e) => handleChange(e.target.files)}
         />
-        <div className={"buttons"}>
-          <button
-            className={"action-button" + (imageTiles.length === 0 ? " active" : "")}
-            onClick={() => document.getElementById('selectedFile').click()}
-          >
-            <div className={"inner-text"}>
-              {!didFormReport ?
-                <>выбрать фото</>
-                :
-                <>выбрать новые фото</>
-              }
-            </div>
-          </button>
-          {didFormReport ?
-            <>
-              <button
-                className={"action-button"}
-                onClick={downloadPDF}
-              >
-                📥 PDF
-              </button>
-              <button
-                className={"action-button"}
-                onClick={downloadCSV}
-              >
-                📥 CSV
-              </button>
-            </>
-            :
-            <button
-              className={"action-button" + ((imageTiles.length > 0 && !didFormReport) ? " active" : " passive")}
-              style={!isLoading ? {width: '260px', height: '40.5px'}: {width: '30px', height: '30px'}}
-              onClick={predict}
-            >
-              {isLoading ?
-                <Spinner width={20}/>
-                :
-                <>сгенерировать отчет</>
-              }
-            </button>
-          }
-        </div>
       </div>
+      <div className={"buttons"}>
+        <button
+          className={"action-button" + (imageTiles.length === 0 ? " active" : "")}
+          onClick={() => document.getElementById('selectedFile').click()}
+        >
+          <div className={"inner-text"}>
+            {imageTiles.length === 0 ?
+              <>выбрать фото</>
+              :
+              <>📷</>
+            }
+          </div>
+        </button>
+        <button
+          className={"action-button" + ((imageTiles.length > 0 && !didFormReport) ? " active" : " passive")}
+          style={!isLoading ? {width: '260px', height: '40.5px'}: {width: '40.5px', height: '40.5px'}}
+          onClick={predict}
+        >
+          {isLoading ?
+            <Spinner width={20}/>
+            :
+            <>сгенерировать отчет</>
+          }
+        </button>
+        <button
+          className={"action-button" + ((didFormReport && !didDownloadCsv) ? " active" : didDownloadCsv ? '': ' passive')}
+          onClick={downloadPDF}
+        >
+          📥 PDF
+        </button>
+        <button
+          className={"action-button" + ((didFormReport && !didDownloadCsv) ? " active" : didDownloadCsv ? '': ' passive')}
+          onClick={downloadCSV}
+        >
+          📥 CSV
+        </button>
+
+        <button
+          className={"action-button" + ((didDownloadCsv && (isReportCorrect === undefined)) ? ' active': ' passive')}
+          onClick={aproveCsv}
+        >
+          отчет верный
+        </button>
+        <button
+          className={"action-button" + ((didDownloadCsv && (isReportCorrect === undefined)) ? ' active': ' passive')}
+          onClick={(disaproveCsv)}
+        >
+          отчет не верный
+        </button>
+
+        <input
+          type="file"
+          id="selectedCSV"
+          style={{display: "none"}}
+          onChange={(e) => correctCsv(e.target.files)}
+        />
+        <button
+          className={"action-button" + ((didDownloadCsv && (isReportCorrect === false)) ? ' active': ' passive')}
+          onClick={() => {
+            document.getElementById('selectedCSV').click()
+          }}
+        >
+          скоректировать CSV
+        </button>
+        <button
+          className={"action-button" + ((didDownloadCsv && (isReportCorrect === true)) ? ' active': ' passive')}
+          style={{backgroundColor: '#6dc244', color: 'white', border: 'none'}}
+        >
+          ✅ спасибо
+        </button>
+      </div>
+
       <div className={"images"}>
         {imageTiles}
       </div>
-      <div className={"buttons"}>
+      {/*<div className={"buttons"}>*/}
 
-        {didDownloadCsv &&
-          <>
-            <button
-              className={"action-button secondary"}
-              onClick={aproveCsv}
-            >
-              отчет верный
-            </button>
-            <input
-              type="file"
-              id="selectedCSV"
-              style={{display: "none"}}
-              onChange={(e) => correctCsv(e.target.files)}
-            />
-            <button
-              className={"action-button secondary"}
-              onClick={() => document.getElementById('selectedCSV').click()}
-            >
-              скоректировать CSV
-            </button>
-          </>
-        }
-      </div>
+      {/* */}
+      {/*</div>*/}
 
     </div>
   )
