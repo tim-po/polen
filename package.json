@@ -9,7 +9,7 @@
     "get-user-locale": "^2.1.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1",
+    "react-scripts": "5.0.1",
     "sass": "^1.57.1",
     "serve": "^11.3.0",
     "typescript": "^3.9.10"
