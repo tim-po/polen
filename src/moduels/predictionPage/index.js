@@ -65,8 +65,8 @@ function PredictPage(props) {
       return
     }
     setIsLoading(true)
-    const API_ENDPOINT = `https://pollen-server.ngrok.io/predict?locale=${documentLocale}`;
-    const downloadUrl = `https://pollen-server.ngrok.io/download?locale=${documentLocale}&path=`
+    const API_ENDPOINT = `https://ctlab.itmo.ru/nkhanzhina/predict?locale=${documentLocale}`;
+    const downloadUrl = `https://ctlab.itmo.ru/nkhanzhina/download?locale=${documentLocale}&path=`
     const request = new XMLHttpRequest();
     const formData = new FormData();
 
@@ -118,7 +118,7 @@ function PredictPage(props) {
   }
 
   const aproveCsv = () => {
-    const API_ENDPOINT = `https://pollen-server.ngrok.io/accept?report=${reportCSV.split('/')[reportCSV.split('/').length-1]}`;
+    const API_ENDPOINT = `https://ctlab.itmo.ru/nkhanzhina/accept?report=${reportCSV.split('/')[reportCSV.split('/').length-1]}`;
     const request = new XMLHttpRequest();
 
     request.open("POST", API_ENDPOINT, true);
@@ -137,7 +137,7 @@ function PredictPage(props) {
     if(!correctionCsv.length){
       return
     }
-    const API_ENDPOINT = `https://pollen-server.ngrok.io/upload?report=${correctionCsv[0].name}`;
+    const API_ENDPOINT = `https://ctlab.itmo.ru/nkhanzhina/upload?report=${correctionCsv[0].name}`;
     const request = new XMLHttpRequest();
     const formData = new FormData();
 
